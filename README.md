@@ -26,7 +26,7 @@ place the 'serve' script anywhere exposed by your $PATH, e.g.
 
 ```
 git clone https://github.com/benvan/serve.git
-sudo ln -s `readlink -f serve/serve` /usr/local/bin
+sudo ln -s "$(pwd)/serve/serve" /usr/local/bin
 ```
 # configuration
 serve automatically copies urls to your clipboard. If you wish to disable this, delete the following line in the serve script:
