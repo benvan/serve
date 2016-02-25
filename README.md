@@ -11,8 +11,8 @@ serve .
 # link copied to clipboard, e.g.
 # http://192.168.0.6:3942/foo
 
-# in directory "bar"
-serve file1.txt file2.txt
+# serve some more files...
+serve ../bar/file1.txt ../bar/file2.txt
 # file1.txt and file2.txt additionally hosted
 
 serve -c
