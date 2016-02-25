@@ -34,7 +34,6 @@ function serveFile(){
 }
 
 if [ ! -d ~/.pythonserver ];then
-  echo making
   mkdir ~/.pythonserver
 fi
 
