@@ -1,7 +1,7 @@
 # serve
 Instant, backgrounded local hosting for multiple files and folders.
 
-Requires python.a
+Requires python
 
 # usage
 
@@ -21,5 +21,13 @@ serve -c
 
 ![example serve result](screenie.png?raw=true "example serve result")
 
-# how
+# installation
+place the 'serve' script anywhere exposed by your $PATH, e.g.
+
+```
+git clone https://github.com/benvan/serve.git
+sudo ln -s `readlink -f serve/serve` /usr/local/bin
+```
+
+# how does this work?
 serve starts a python simplehttpserver running out of ~/.pythonserver. Files and folders are then symlinked from that directory as and when you need them.
