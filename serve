@@ -1,0 +1,68 @@
+#!/bin/bash
+
+FILES=()
+PORT=9054
+
+
+while [ ! $# -eq 0 ]
+do
+    case "$1" in
+        -c)
+            CLEAR=1;
+            ;;
+        .)
+            FILES+=("`pwd`")
+            ;;
+        *)
+            FILES+=("$1");
+            ;;
+    esac
+    shift
+done
+
+function serveFile(){
+  local FILE=$1
+
+  if [[ "$FILE" ]]; then
+    FULLPATH=`readlink -f $FILE`
+    FILE=`basename $FILE`
+  
+    if [ -f "$FULLPATH" ] || [ -d "$FULLPATH" ]; then
+      ln -snfF $FULLPATH ~/.pythonserver/$FILE
+    fi
+  fi
+}
+
+if [ ! -d ~/.pythonserver ];then
+  echo making
+  mkdir ~/.pythonserver
+fi
+
+if [ $CLEAR ]; then
+  echo Clearing out..
+  rm -f ~/.pythonserver/*
+fi
+
+for f in "${FILES[@]}"; do
+  serveFile "$f"
+done
+
+
+BASE="http://$(myip):$PORT" 
+SINGLEFILE=`basename "${FILES[0]}"`
+
+if [[ "$SINGLEFILE" ]]; then
+  echo "$BASE/$SINGLEFILE"| clip
+else
+  echo "$BASE" | clip
+fi
+
+if [ ! `pgrep -f "python -m SimpleHTTPServer $PORT"` ]; then
+  python -m SimpleHTTPServer $PORT &> /dev/null &
+  echo Started new server on $BASE
+elif [ ${#FILES[@]} -eq 1 ]; then
+  echo Rehosted: "$BASE/$SINGLEFILE"
+elif [ "$SINGLEFILE" ]; then
+  echo Rehosted: $BASE
+fi
+
