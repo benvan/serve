@@ -80,6 +80,7 @@ else
 fi
 
 if [ ! `pgrep -f "python -m SimpleHTTPServer $PORT"` ]; then
+  cd ~/.pythonserver
   python -m SimpleHTTPServer $PORT &> /dev/null &
   echo Started new server on $BASE
 elif [ ${#FILES[@]} -eq 1 ]; then
